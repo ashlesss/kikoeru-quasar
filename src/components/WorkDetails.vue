@@ -66,7 +66,7 @@
 
           <!-- DLsite链接 -->
           <div class="col-auto">
-            <q-icon name="launch" size="xs" /><a class="text-blue" :href="`https://www.dlsite.com/home/work/=/product_id/RJ${String(metadata.id).padStart(6,'0')}.html`" rel="noreferrer noopener" target="_blank">DLsite</a>
+            <q-icon name="launch" size="xs" /><a class="text-blue" :href="`https://www.dlsite.com/home/work/=/product_id/RJ${String(fullWorkId)}.html`" rel="noreferrer noopener" target="_blank">DLsite</a>
           </div>
         </div>
       </div>
@@ -192,12 +192,23 @@ export default {
     }
   },
 
+  created() {
+    console.log(this.fullWorkId)
+  },
+
   computed: {
     sortedRatings: function() {
       function compare(a, b) {
         return (a.review_point > b.review_point) ? -1 : 1;
       }
       return this.metadata.rate_count_detail.slice().sort(compare);
+    },
+
+    fullWorkId () {
+      if (this.metadata.id >= 1000000) {
+        return (`00000000${this.metadata.id}`).slice(-8)
+      }
+      return (`000000${this.metadata.id}`).slice(-6) 
     }
   },
 
